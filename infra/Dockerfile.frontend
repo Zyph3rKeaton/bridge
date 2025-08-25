@@ -1,0 +1,10 @@
+FROM node:20-alpine
+WORKDIR /app
+COPY package.json package-lock.json* pnpm-lock.yaml* .npmrc* tsconfig.base.json ./
+COPY apps/frontend/package.json apps/frontend/package.json
+COPY packages/ui/package.json packages/ui/package.json
+RUN npm ci || npm install
+COPY . .
+WORKDIR /app/apps/frontend
+EXPOSE 3000
+CMD ["npm", "run", "dev"] 

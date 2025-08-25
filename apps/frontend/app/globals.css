@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: hsl(40 20% 98%);
+  --surface: hsl(40 14% 93%);
+  --text: hsl(230 20% 18%);
+  --primary: hsl(185 72% 35%);
+  --primary-contrast: hsl(0 0% 100%);
+  --accent: hsl(42 95% 52%);
+  --success: hsl(145 65% 32%);
+  --warning: hsl(40 100% 40%);
+  --error: hsl(350 70% 40%);
+}
+
+.dark {
+  --bg: hsl(220 40% 7%); /* deep blue-black */
+  --surface: hsl(220 35% 12%);
+  --text: hsl(210 32% 92%);
+  --primary: hsl(185 72% 45%);
+  --primary-contrast: hsl(220 40% 7%);
+  --accent: hsl(42 95% 60%);
+  --success: hsl(145 60% 45%);
+  --warning: hsl(40 100% 50%);
+  --error: hsl(350 70% 55%);
+}
+
+body { background: var(--bg); color: var(--text); font-size: 18px; }
+
+button { min-height: 56px; } 

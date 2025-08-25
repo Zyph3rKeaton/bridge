@@ -1,0 +1,50 @@
+{
+  "name": "bridge-desktop",
+  "version": "0.1.0",
+  "description": "Bridge Scoring Desktop",
+  "author": "Bridge Club",
+  "main": "main.js",
+  "private": true,
+  "repository": "https://github.com/Zyph3rKeaton/bridge",
+  "scripts": {
+    "start": "electron .",
+    "prep": "npm -w ../../apps/frontend run build",
+    "build": "npm run prep && npx electron-builder --mac dmg --publish never",
+    "release": "npm run prep && npx electron-builder --mac dmg,zip --publish always"
+  },
+  "dependencies": {
+    "electron-updater": "6.3.9"
+  },
+  "devDependencies": {
+    "electron": "28.2.0",
+    "electron-builder": "24.13.3",
+    "7zip-bin": "5.1.1",
+    "ts-node": "10.9.2",
+    "typescript": "5.9.2"
+  },
+  "build": {
+    "appId": "com.bridge.scoring",
+    "mac": {
+      "target": ["dmg", "zip"],
+      "extendInfo": {
+        "NSCameraUsageDescription": "Used to capture scoresheets for OCR parsing.",
+        "NSCameraUseContinuityCameraDeviceType": true
+      }
+    },
+    "publish": [
+      { "provider": "github", "owner": "Zyph3rKeaton", "repo": "bridge", "channel": "latest", "releaseType": "draft" }
+    ],
+    "extraResources": [
+      {
+        "from": "../frontend/out",
+        "to": "frontend",
+        "filter": ["**/*"]
+      },
+      {
+        "from": "../backend",
+        "to": "backend",
+        "filter": ["**/*"]
+      }
+    ]
+  }
+}

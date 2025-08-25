@@ -1,0 +1,23 @@
+{
+  "name": "bridge-monorepo",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "npm@10.8.1",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "postinstall": "echo 'Install complete'",
+    "lint": "echo 'Add linting in apps'",
+    "typecheck": "npm -w apps/backend run typecheck && npm -w apps/frontend run typecheck",
+    "test": "npm -w apps/backend test && npm -w apps/frontend test",
+    "build": "npm -w apps/backend run build && npm -w apps/frontend run build"
+  },
+  "devDependencies": {
+    "7zip-bin": "5.1.1"
+  },
+  "overrides": {
+    "7zip-bin": "5.1.1"
+  }
+}

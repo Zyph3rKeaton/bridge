@@ -1,0 +1,9 @@
+{
+  "name": "Bridge Scoring",
+  "short_name": "Bridge",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8f6f3",
+  "theme_color": "#1f938d",
+  "icons": []
+} 

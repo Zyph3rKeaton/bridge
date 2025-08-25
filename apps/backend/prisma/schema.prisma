@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id               String   @id @default(cuid())
+  type             String
+  name             String
+  start_at         DateTime @default(now())
+  boards_total     Int
+  boards_per_round Int?
+  rounds           Int?
+  timer_minutes    Int?
+  status           String   @default("setup")
+  sections         Section[]
+  boards           Board[]
+  rankingSnapshots RankingSnapshot[]
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Section {
+  id        String  @id @default(cuid())
+  event_id  String
+  letter    String
+  event     Event   @relation(fields: [event_id], references: [id], onDelete: Cascade)
+  tables    Table[]
+  pairs     Pair[]
+  teams     Team[]
+  movement  Movement?
+}
+
+model Table {
+  id         String  @id @default(cuid())
+  section_id String
+  number     Int
+  section    Section @relation(fields: [section_id], references: [id], onDelete: Cascade)
+  results    Result[]
+}
+
+model Pair {
+  id          String  @id @default(cuid())
+  section_id  String
+  number      Int
+  north_name  String?
+  south_name  String?
+  section     Section @relation(fields: [section_id], references: [id], onDelete: Cascade)
+}
+
+model Team {
+  id         String  @id @default(cuid())
+  section_id String
+  number     Int
+  name       String?
+  section    Section @relation(fields: [section_id], references: [id], onDelete: Cascade)
+}
+
+model Movement {
+  id          String  @id @default(cuid())
+  section_id  String  @unique
+  type        String
+  json_plan   String
+  section     Section @relation(fields: [section_id], references: [id], onDelete: Cascade)
+}
+
+model Board {
+  id          String  @id @default(cuid())
+  event_id    String
+  number      Int
+  dealer      String
+  vulnerability String
+  event       Event   @relation(fields: [event_id], references: [id], onDelete: Cascade)
+  results     Result[]
+}
+
+model Result {
+  id             String  @id @default(cuid())
+  board_id       String
+  table_id       String
+  pair_ns        Int
+  pair_ew        Int
+  contract_level Int?
+  strain         String?
+  doubled        Boolean @default(false)
+  redoubled      Boolean @default(false)
+  declarer       String?
+  tricks_made    Int?
+  score          Int?
+  remarks        String?
+  adjusted_type  String?
+  adjusted_value Int?
+  board          Board   @relation(fields: [board_id], references: [id], onDelete: Cascade)
+  table          Table   @relation(fields: [table_id], references: [id], onDelete: Cascade)
+}
+
+model RankingSnapshot {
+  id         String   @id @default(cuid())
+  event_id   String
+  created_at DateTime @default(now())
+  json       String
+  event      Event    @relation(fields: [event_id], references: [id], onDelete: Cascade)
+} 

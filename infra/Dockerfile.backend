@@ -1,0 +1,12 @@
+FROM node:20-alpine AS base
+WORKDIR /app
+COPY package.json package-lock.json* pnpm-lock.yaml* .npmrc* tsconfig.base.json ./
+COPY apps/backend/package.json apps/backend/package.json
+COPY packages/ui/package.json packages/ui/package.json
+RUN npm ci || npm install
+COPY . .
+WORKDIR /app/apps/backend
+RUN npm ci || npm install
+RUN npm run build || true
+EXPOSE 4000
+CMD ["npm", "run", "start"] 
