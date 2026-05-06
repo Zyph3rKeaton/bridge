@@ -10,8 +10,10 @@
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
+      "@bridge/ui": ["packages/ui/src/index.ts"],
+      "@bridge/ui/*": ["packages/ui/src/*"],
       "@ui/*": ["packages/ui/src/*"],
       "@ui": ["packages/ui/src/index.ts"]
     }
   }
-} 
+}
