@@ -28,6 +28,7 @@ jobs:
         with:
           name: bridge-scoring-windows-unpacked
           path: apps/electron/dist/win-unpacked/**
+          include-hidden-files: true
           if-no-files-found: error
 
   mac-dmg:
