@@ -9,7 +9,9 @@
   "scripts": {
     "start": "node dist/src/main.js",
     "start:dev": "ts-node-dev --respawn --transpile-only src/main.ts",
+    "prebuild": "npm run prisma:generate",
     "build": "tsc -p tsconfig.json",
+    "pretypecheck": "npm run prisma:generate",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --name init",

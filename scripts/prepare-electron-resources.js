@@ -114,9 +114,6 @@ function main() {
   cleanDir(resourcesDir);
 
   run(npmCmd, ['-w', 'packages/ui', 'run', 'build']);
-  run(npmCmd, ['-w', 'apps/backend', 'run', 'prisma:generate'], {
-    env: { DATABASE_URL: 'file:./../dev.db' },
-  });
   run(npmCmd, ['-w', 'apps/backend', 'run', 'build']);
   run(npmCmd, ['-w', 'apps/frontend', 'run', 'build']);
 
