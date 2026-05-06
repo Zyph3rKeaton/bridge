@@ -1,26 +1,15 @@
 import Link from 'next/link';
+import BackendStatus from '../components/BackendStatus';
 
-async function getHealth() {
-  try {
-    const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000';
-    const res = await fetch(`${base}/api/health`, { cache: 'no-store' });
-    if (!res.ok) throw new Error('bad');
-    const data = await res.json();
-    return data?.status === 'ok' ? 'online' : 'degraded';
-  } catch (_) {
-    return 'offline';
-  }
-}
-
-export default async function Home() {
-  const status = await getHealth();
+export default function Home() {
   return (
     <div className="p-6">
-      <div className="flex items-center gap-3">
-        <h1 className="text-3xl font-semibold">Bridge Scoring</h1>
-        <span className={`text-sm px-2 py-1 rounded ${status === 'online' ? 'bg-green-100 text-green-800' : status === 'offline' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}`}>
-          Backend: {status}
-        </span>
+      <div className="flex flex-wrap items-center gap-4">
+        <img src="/app-logo.png" alt="" width={80} height={80} className="h-20 w-20 rounded-2xl shadow-md" />
+        <div className="flex flex-wrap items-center gap-3">
+          <h1 className="text-3xl font-semibold">Bridge Scoring</h1>
+          <BackendStatus />
+        </div>
       </div>
       <p className="mt-4 text-lg">Start a new session or resume an existing one.</p>
       <div className="mt-6 flex gap-4 flex-wrap">
@@ -32,4 +21,4 @@ export default async function Home() {
       </div>
     </div>
   );
-} 
+}

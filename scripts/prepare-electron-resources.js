@@ -43,6 +43,12 @@ function copyDir(from, to) {
   });
 }
 
+function requireFile(filePath, label) {
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`Missing ${label}: ${filePath}`);
+  }
+}
+
 function writeBackendPackage() {
   const backendPackage = JSON.parse(
     fs.readFileSync(path.join(backendDir, 'package.json'), 'utf8')
@@ -119,6 +125,10 @@ function main() {
   }
 
   copyDir(frontendOutDir, stagedFrontendDir);
+  requireFile(path.join(stagedFrontendDir, 'index.html'), 'packaged frontend home page');
+  requireFile(path.join(stagedFrontendDir, 'manifest.webmanifest'), 'packaged frontend manifest');
+  requireFile(path.join(stagedFrontendDir, 'icon-192.png'), 'packaged frontend 192px icon');
+  requireFile(path.join(stagedFrontendDir, 'icon-512.png'), 'packaged frontend 512px icon');
 
   fs.mkdirSync(stagedBackendDir, { recursive: true });
   copyDir(path.join(backendDir, 'dist'), path.join(stagedBackendDir, 'dist'));

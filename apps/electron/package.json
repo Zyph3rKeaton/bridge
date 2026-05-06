@@ -27,8 +27,10 @@
   "build": {
     "productName": "Bridge Scoring",
     "appId": "com.bridge.scoring",
+    "icon": "icon.png",
     "directories": {
-      "output": "dist"
+      "output": "dist",
+      "buildResources": "assets"
     },
     "npmRebuild": false,
     "mac": {
@@ -47,6 +49,10 @@
       { "provider": "github", "owner": "Zyph3rKeaton", "repo": "bridge", "channel": "latest", "releaseType": "draft" }
     ],
     "extraResources": [
+      {
+        "from": "assets/icon.png",
+        "to": "icon.png"
+      },
       {
         "from": "resources/frontend",
         "to": "frontend",

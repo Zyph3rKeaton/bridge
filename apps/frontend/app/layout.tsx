@@ -8,6 +8,13 @@ export const metadata: Metadata = {
   title: 'Bridge Scoring',
   description: 'Senior-friendly bridge scoring PWA',
   manifest: '/manifest.webmanifest',
+  icons: {
+    icon: [
+      { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+  },
 };
 
 export const viewport: Viewport = {
@@ -22,7 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className="dark">
       <head>
-        <link rel="apple-touch-icon" href="/icon-192.png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </head>
@@ -30,6 +37,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <a href="#main" className="sr-only focus:not-sr-only">Skip to content</a>
         <header className="sticky top-0 z-50" style={{ backgroundColor: 'var(--surface)', color: 'var(--text)' }}>
           <nav className="max-w-6xl mx-auto px-4 py-3 flex flex-wrap gap-3 items-center justify-center">
+            <Link className="flex items-center gap-2 rounded-lg px-3 py-2 text-xl font-semibold focus:outline-none focus:ring-2" href="/" aria-label="Bridge Scoring home">
+              <img src="/icon-192.png" alt="" width={44} height={44} className="h-11 w-11 rounded-xl shadow-sm" />
+              <span>Bridge</span>
+            </Link>
             <BackButton />
             <Link className="rounded-lg px-5 py-3 text-xl font-semibold focus:outline-none focus:ring-2" href="/" style={{ backgroundColor: 'var(--primary)', color: 'var(--primary-contrast)' }}>Home</Link>
             <Link className="rounded-lg px-5 py-3 text-xl font-semibold focus:outline-none focus:ring-2" href="/new" style={{ backgroundColor: 'var(--accent)', color: 'var(--primary-contrast)' }}>New Session</Link>
@@ -46,7 +57,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           dangerouslySetInnerHTML={{
             __html: `
               if ('serviceWorker' in navigator) {
-                if (location.hostname.includes('localhost')) {
+                if (['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)) {
                   navigator.serviceWorker.getRegistrations().then((regs) => regs.forEach(r => r.unregister()));
                 } else {
                   window.addEventListener('load', function() {
@@ -60,4 +71,4 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </body>
     </html>
   );
-} 
+}

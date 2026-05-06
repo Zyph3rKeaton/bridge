@@ -5,6 +5,8 @@ const path = require('path');
 const { spawn } = require('child_process');
 
 let backendProcess = null;
+let frontendServer = null;
+let frontendServerUrl = null;
 
 function log(message) {
   const line = `[${new Date().toISOString()}] ${message}\n`;
@@ -19,6 +21,77 @@ function resourcePath(name) {
   return app.isPackaged
     ? path.join(process.resourcesPath, name)
     : path.join(__dirname, 'resources', name);
+}
+
+function appIconPath() {
+  return app.isPackaged
+    ? path.join(process.resourcesPath, 'icon.png')
+    : path.join(__dirname, 'assets', 'icon.png');
+}
+
+function contentTypeFor(filePath) {
+  const extension = path.extname(filePath).toLowerCase();
+  const contentTypes = {
+    '.css': 'text/css; charset=utf-8',
+    '.html': 'text/html; charset=utf-8',
+    '.js': 'text/javascript; charset=utf-8',
+    '.json': 'application/json; charset=utf-8',
+    '.png': 'image/png',
+    '.svg': 'image/svg+xml',
+    '.webmanifest': 'application/manifest+json; charset=utf-8',
+  };
+  return contentTypes[extension] || 'application/octet-stream';
+}
+
+function resolveFrontendFile(frontendDir, requestUrl) {
+  const root = path.resolve(frontendDir);
+  const url = new URL(requestUrl, 'http://127.0.0.1');
+  const pathname = decodeURIComponent(url.pathname === '/' ? '/index.html' : url.pathname);
+  let filePath = path.resolve(root, `.${pathname}`);
+
+  if (filePath !== root && !filePath.startsWith(`${root}${path.sep}`)) {
+    return null;
+  }
+
+  if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
+    filePath = path.join(filePath, 'index.html');
+  }
+
+  return filePath;
+}
+
+function serveFrontendFile(frontendDir, req, res) {
+  const filePath = resolveFrontendFile(frontendDir, req.url || '/');
+  if (!filePath || !fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
+    res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end('Not found');
+    return;
+  }
+
+  const cacheControl = filePath.includes(`${path.sep}_next${path.sep}static${path.sep}`)
+    ? 'public, max-age=31536000, immutable'
+    : 'no-cache';
+
+  res.writeHead(200, {
+    'Cache-Control': cacheControl,
+    'Content-Type': contentTypeFor(filePath),
+  });
+  fs.createReadStream(filePath).pipe(res);
+}
+
+function startFrontendServer(frontendDir) {
+  if (frontendServerUrl) return Promise.resolve(frontendServerUrl);
+
+  return new Promise((resolve, reject) => {
+    frontendServer = http.createServer((req, res) => serveFrontendFile(frontendDir, req, res));
+    frontendServer.once('error', reject);
+    frontendServer.listen(0, '127.0.0.1', () => {
+      const address = frontendServer.address();
+      frontendServerUrl = `http://127.0.0.1:${address.port}`;
+      log(`Started frontend server at ${frontendServerUrl}`);
+      resolve(frontendServerUrl);
+    });
+  });
 }
 
 function toPrismaFileUrl(filePath) {
@@ -109,16 +182,21 @@ function startBackend() {
 }
 
 async function loadFrontend(win) {
-  const indexHtml = path.join(resourcePath('frontend'), 'index.html');
+  const frontendDir = resourcePath('frontend');
+  const indexHtml = path.join(frontendDir, 'index.html');
   if (process.env.ELECTRON_START_URL) {
     await win.loadURL(process.env.ELECTRON_START_URL);
     return;
   }
 
   await waitForBackend(Number(process.env.PORT || 4000));
-  await win.loadFile(indexHtml).catch(() => {
-    win.loadURL('http://localhost:3000');
-  });
+  if (fs.existsSync(indexHtml)) {
+    const url = await startFrontendServer(frontendDir);
+    await win.loadURL(url);
+    return;
+  }
+
+  await win.loadURL('http://localhost:3000');
 }
 
 async function createWindow() {
@@ -129,6 +207,7 @@ async function createWindow() {
     minHeight: 650,
     show: false,
     backgroundColor: '#f8fafc',
+    icon: appIconPath(),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -151,6 +230,9 @@ app.whenReady().then(async () => {
 app.on('window-all-closed', () => {
   if (backendProcess) {
     try { backendProcess.kill(); } catch (_) {}
+  }
+  if (frontendServer) {
+    try { frontendServer.close(); } catch (_) {}
   }
   if (process.platform !== 'darwin') app.quit();
 });
