@@ -11,6 +11,7 @@ const config = {
   testMatch: [
     '<rootDir>/__tests__/ocrParser.test.ts',
     '<rootDir>/__tests__/newSession.test.tsx',
+    '<rootDir>/__tests__/settings.test.tsx',
   ],
   testPathIgnorePatterns: ['<rootDir>/tests/'],
 };

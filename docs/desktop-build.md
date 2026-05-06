@@ -25,7 +25,11 @@ The workflow now requires signing secrets. If they are missing, the macOS job fa
 
 ## AI OCR key
 
-Do not package an OpenAI API key into the app. For desktop testing, create a local `bridge.env` file in the app data folder:
+Grandma's copy should use Keaton's OpenAI API key so the AI photo reader works and billing stays on Keaton's account.
+
+Do not commit the key and do not package a raw key into a public release. Grandma should paste the key once in **Settings** -> **OpenAI Key** -> **Save Key**. The app stores it in its private app data folder and reuses it on future launches.
+
+For troubleshooting, the app writes a local `bridge.env` file in the app data folder:
 
 ```text
 OPENAI_API_KEY=your-key-here
@@ -34,4 +38,4 @@ OPENAI_API_KEY=your-key-here
 On Windows this folder is usually `%APPDATA%\Bridge Scoring`.
 On macOS this folder is usually `~/Library/Application Support/Bridge Scoring`.
 
-The AI scan workflow is click-driven: choosing a photo only previews it, and AI OCR runs only when `AI Parse`, `AI Parse & Import`, or `Find Edges` is pressed.
+The AI scan workflow is the main score-entry path for grandma. Choosing a photo only previews it, and AI OCR runs only when `AI Parse`, `AI Parse & Import`, or `Find Edges` is pressed.

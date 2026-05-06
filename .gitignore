@@ -42,3 +42,4 @@ yarn-error.log*
 
 # Misc
 *.swp
+docs/grandma-openai-key-private.pdf

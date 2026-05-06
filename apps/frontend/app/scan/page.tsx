@@ -180,7 +180,7 @@ function ScanClient() {
         if (match) gotoBoardEntryWithRow(match);
       }
     } catch (e) {
-      setMessage('AI parse failed. Check backend and OPENAI_API_KEY.');
+      setMessage('AI parse failed. Open Settings and save the OpenAI key.');
     } finally {
       setLoading(false);
     }
@@ -194,7 +194,7 @@ function ScanClient() {
       if (!blob) { setMessage('No image to parse'); setLoading(false); return; }
       await aiParseWithBlob(new File([blob], 'scan.png', { type: blob.type || 'image/png' }));
     } catch (e) {
-      setMessage('AI parse failed. Check backend and OPENAI_API_KEY.');
+      setMessage('AI parse failed. Open Settings and save the OpenAI key.');
     } finally {
       setLoading(false);
     }
@@ -220,7 +220,7 @@ function ScanClient() {
         if (match) gotoBoardEntryWithRow(match);
       }
     } catch (e) {
-      setMessage('AI import failed. Check backend and OPENAI_API_KEY.');
+      setMessage('AI import failed. Open Settings and save the OpenAI key.');
     } finally {
       setLoading(false);
     }

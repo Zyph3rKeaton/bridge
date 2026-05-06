@@ -13,7 +13,7 @@ endobj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
 endobj
 5 0 obj
-<< /Length 1567 >>
+<< /Length 1559 >>
 stream
 BT
 1 0 0 1 0 0 Tm
@@ -62,25 +62,25 @@ BT
 (4. If it still does not work, call me.) Tj
 /F2 20 Tf
 1 0 0 1 58.00 274.00 Tm
-(Start A New Game) Tj
+(Turn On Photo AI) Tj
 /F1 16 Tf
-1 0 0 1 70.00 236.00 Tm
-(1. Click New Session.) Tj
+1 0 0 1 58.00 236.00 Tm
+(Do this one time.) Tj
 /F1 16 Tf
-1 0 0 1 70.00 210.00 Tm
-(2. Leave the usual choices alone unless you need to change) Tj
+1 0 0 1 70.00 202.00 Tm
+(1. Click Settings.) Tj
 /F1 16 Tf
-1 0 0 1 70.00 186.00 Tm
-(them.) Tj
+1 0 0 1 70.00 176.00 Tm
+(2. Click the OpenAI Key box.) Tj
 /F1 16 Tf
-1 0 0 1 70.00 160.00 Tm
-(3. Click Create Session.) Tj
+1 0 0 1 70.00 150.00 Tm
+(3. Paste the key I sent you.) Tj
 /F1 16 Tf
-1 0 0 1 70.00 134.00 Tm
-(4. When the app says the game was created, click OK.) Tj
-/F2 20 Tf
-1 0 0 1 58.00 93.00 Tm
-(Enter A Score) Tj
+1 0 0 1 70.00 124.00 Tm
+(4. Click Save Key.) Tj
+/F1 16 Tf
+1 0 0 1 70.00 98.00 Tm
+(5. When it says Saved. Photo AI is ready., you are done.) Tj
 ET
 endstream
 endobj
@@ -88,77 +88,74 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
 endobj
 7 0 obj
-<< /Length 1561 >>
+<< /Length 1478 >>
 stream
 BT
 1 0 0 1 0 0 Tm
 0 0 0 rg
-/F1 16 Tf
-1 0 0 1 70.00 734.00 Tm
-(1. Click Board Entry.) Tj
-/F1 16 Tf
-1 0 0 1 70.00 708.00 Tm
-(2. Pick the board you are scoring.) Tj
-/F1 16 Tf
-1 0 0 1 70.00 682.00 Tm
-(3. Tap the contract number.) Tj
-/F1 16 Tf
-1 0 0 1 70.00 656.00 Tm
-(4. Tap the suit.) Tj
-/F1 16 Tf
-1 0 0 1 70.00 630.00 Tm
-(5. Tap Doubled or Redoubled only if needed.) Tj
-/F1 16 Tf
-1 0 0 1 70.00 604.00 Tm
-(6. Tap who played the hand.) Tj
-/F1 16 Tf
-1 0 0 1 70.00 578.00 Tm
-(7. Tap how many tricks were made.) Tj
-/F1 16 Tf
-1 0 0 1 70.00 552.00 Tm
-(8. Check the score shown on the screen.) Tj
-/F1 16 Tf
-1 0 0 1 70.00 526.00 Tm
-(9. Click Save & Next Board.) Tj
 /F2 20 Tf
-1 0 0 1 58.00 485.00 Tm
+1 0 0 1 58.00 724.00 Tm
+(Start A New Game) Tj
+/F1 16 Tf
+1 0 0 1 70.00 686.00 Tm
+(1. Click New Session.) Tj
+/F1 16 Tf
+1 0 0 1 70.00 660.00 Tm
+(2. Leave the usual choices alone unless you need to change) Tj
+/F1 16 Tf
+1 0 0 1 70.00 636.00 Tm
+(them.) Tj
+/F1 16 Tf
+1 0 0 1 70.00 610.00 Tm
+(3. Click Create Session.) Tj
+/F1 16 Tf
+1 0 0 1 70.00 584.00 Tm
+(4. When the app says the game was created, click OK.) Tj
+/F2 20 Tf
+1 0 0 1 58.00 543.00 Tm
+(Enter Scores With A Photo) Tj
+/F1 16 Tf
+1 0 0 1 58.00 505.00 Tm
+(This is the main way to enter scores.) Tj
+/F1 16 Tf
+1 0 0 1 70.00 471.00 Tm
+(1. Click Scan.) Tj
+/F1 16 Tf
+1 0 0 1 70.00 445.00 Tm
+(2. Choose a clear photo of the score sheet.) Tj
+/F1 16 Tf
+1 0 0 1 70.00 419.00 Tm
+(3. Click AI Parse & Import.) Tj
+/F1 16 Tf
+1 0 0 1 70.00 393.00 Tm
+(4. Wait while the app reads the photo.) Tj
+/F1 16 Tf
+1 0 0 1 70.00 367.00 Tm
+(5. Click Results.) Tj
+/F1 16 Tf
+1 0 0 1 70.00 341.00 Tm
+(6. Check that the scores look right.) Tj
+/F2 20 Tf
+1 0 0 1 58.00 300.00 Tm
 (See The Results) Tj
 /F1 16 Tf
-1 0 0 1 70.00 447.00 Tm
+1 0 0 1 70.00 262.00 Tm
 (1. Click Results.) Tj
 /F1 16 Tf
-1 0 0 1 70.00 421.00 Tm
+1 0 0 1 70.00 236.00 Tm
 (2. Look at Final Standings to see the current scores.) Tj
 /F1 16 Tf
-1 0 0 1 70.00 395.00 Tm
+1 0 0 1 70.00 210.00 Tm
 (3. Click Export Text if you want to save a copy.) Tj
 /F2 20 Tf
-1 0 0 1 58.00 354.00 Tm
+1 0 0 1 58.00 169.00 Tm
 (Fix A Mistake) Tj
 /F1 16 Tf
-1 0 0 1 70.00 316.00 Tm
+1 0 0 1 70.00 131.00 Tm
 (1. Click Results.) Tj
 /F1 16 Tf
-1 0 0 1 70.00 290.00 Tm
+1 0 0 1 70.00 105.00 Tm
 (2. Find the row with the mistake.) Tj
-/F1 16 Tf
-1 0 0 1 70.00 264.00 Tm
-(3. To remove the row, click the red X.) Tj
-/F1 16 Tf
-1 0 0 1 70.00 238.00 Tm
-(4. To change a number, double-click the number and type the) Tj
-/F1 16 Tf
-1 0 0 1 70.00 214.00 Tm
-(right one.) Tj
-/F1 16 Tf
-1 0 0 1 70.00 188.00 Tm
-(5. If you are not sure what to change, call me before deleting) Tj
-/F1 16 Tf
-1 0 0 1 70.00 164.00 Tm
-(anything.) Tj
-/F2 20 Tf
-1 0 0 1 58.00 123.00 Tm
-(Use A Photo) Tj
 ET
 endstream
 endobj
@@ -166,40 +163,64 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 7 0 R >>
 endobj
 9 0 obj
-<< /Length 756 >>
+<< /Length 1333 >>
 stream
 BT
 1 0 0 1 0 0 Tm
 0 0 0 rg
 /F1 16 Tf
-1 0 0 1 58.00 734.00 Tm
-(Typing scores by hand is the safest way.) Tj
+1 0 0 1 70.00 734.00 Tm
+(3. To remove the row, click the red X.) Tj
 /F1 16 Tf
-1 0 0 1 58.00 700.00 Tm
-(If I have set up photo reading for you:) Tj
+1 0 0 1 70.00 708.00 Tm
+(4. To change a number, double-click the number and type the) Tj
 /F1 16 Tf
-1 0 0 1 70.00 666.00 Tm
-(1. Click Scan.) Tj
+1 0 0 1 70.00 684.00 Tm
+(right one.) Tj
 /F1 16 Tf
-1 0 0 1 70.00 640.00 Tm
-(2. Choose a clear photo of the score sheet.) Tj
+1 0 0 1 70.00 658.00 Tm
+(5. If you are not sure what to change, call me before deleting) Tj
 /F1 16 Tf
-1 0 0 1 70.00 614.00 Tm
-(3. Click AI Parse & Import.) Tj
-/F1 16 Tf
-1 0 0 1 70.00 588.00 Tm
-(4. Check the results afterward.) Tj
-/F1 16 Tf
-1 0 0 1 58.00 557.00 Tm
-(If the photo reader gets confused, type the score by hand) Tj
-/F1 16 Tf
-1 0 0 1 58.00 533.00 Tm
-(instead.) Tj
+1 0 0 1 70.00 634.00 Tm
+(anything.) Tj
 /F2 20 Tf
-1 0 0 1 58.00 489.00 Tm
+1 0 0 1 58.00 593.00 Tm
+(Type A Score By Hand) Tj
+/F1 16 Tf
+1 0 0 1 58.00 555.00 Tm
+(Use this only if the photo reader misses something.) Tj
+/F1 16 Tf
+1 0 0 1 70.00 521.00 Tm
+(1. Click Board Entry.) Tj
+/F1 16 Tf
+1 0 0 1 70.00 495.00 Tm
+(2. Pick the board you are scoring.) Tj
+/F1 16 Tf
+1 0 0 1 70.00 469.00 Tm
+(3. Tap the contract number.) Tj
+/F1 16 Tf
+1 0 0 1 70.00 443.00 Tm
+(4. Tap the suit.) Tj
+/F1 16 Tf
+1 0 0 1 70.00 417.00 Tm
+(5. Tap Doubled or Redoubled only if needed.) Tj
+/F1 16 Tf
+1 0 0 1 70.00 391.00 Tm
+(6. Tap who played the hand.) Tj
+/F1 16 Tf
+1 0 0 1 70.00 365.00 Tm
+(7. Tap how many tricks were made.) Tj
+/F1 16 Tf
+1 0 0 1 70.00 339.00 Tm
+(8. Check the score shown on the screen.) Tj
+/F1 16 Tf
+1 0 0 1 70.00 313.00 Tm
+(9. Click Save & Next Board.) Tj
+/F2 20 Tf
+1 0 0 1 58.00 272.00 Tm
 (Close The App) Tj
 /F1 16 Tf
-1 0 0 1 58.00 451.00 Tm
+1 0 0 1 58.00 234.00 Tm
 (When you are done, close the window like any other app.) Tj
 ET
 endstream
@@ -215,13 +236,13 @@ xref
 0000000134 00000 n 
 0000000204 00000 n 
 0000000279 00000 n 
-0000001898 00000 n 
-0000002034 00000 n 
-0000003647 00000 n 
-0000003783 00000 n 
-0000004590 00000 n 
+0000001890 00000 n 
+0000002026 00000 n 
+0000003556 00000 n 
+0000003692 00000 n 
+0000005077 00000 n 
 trailer
 << /Size 11 /Root 1 0 R >>
 startxref
-4727
+5214
 %%EOF

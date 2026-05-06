@@ -17,6 +17,16 @@ I made this app to help you keep score for a bridge game.
 3. If something looks wrong, close the app and open it again.
 4. If it still does not work, call me.
 
+## Turn On Photo AI
+
+Do this one time.
+
+1. Click **Settings**.
+2. Click the **OpenAI Key** box.
+3. Paste the key I sent you.
+4. Click **Save Key**.
+5. When it says **Saved. Photo AI is ready.**, you are done.
+
 ## Start A New Game
 
 1. Click **New Session**.
@@ -24,17 +34,16 @@ I made this app to help you keep score for a bridge game.
 3. Click **Create Session**.
 4. When the app says the game was created, click **OK**.
 
-## Enter A Score
+## Enter Scores With A Photo
 
-1. Click **Board Entry**.
-2. Pick the board you are scoring.
-3. Tap the contract number.
-4. Tap the suit.
-5. Tap **Doubled** or **Redoubled** only if needed.
-6. Tap who played the hand.
-7. Tap how many tricks were made.
-8. Check the score shown on the screen.
-9. Click **Save & Next Board**.
+This is the main way to enter scores.
+
+1. Click **Scan**.
+2. Choose a clear photo of the score sheet.
+3. Click **AI Parse & Import**.
+4. Wait while the app reads the photo.
+5. Click **Results**.
+6. Check that the scores look right.
 
 ## See The Results
 
@@ -50,18 +59,19 @@ I made this app to help you keep score for a bridge game.
 4. To change a number, double-click the number and type the right one.
 5. If you are not sure what to change, call me before deleting anything.
 
-## Use A Photo
+## Type A Score By Hand
 
-Typing scores by hand is the safest way.
+Use this only if the photo reader misses something.
 
-If I have set up photo reading for you:
-
-1. Click **Scan**.
-2. Choose a clear photo of the score sheet.
-3. Click **AI Parse & Import**.
-4. Check the results afterward.
-
-If the photo reader gets confused, type the score by hand instead.
+1. Click **Board Entry**.
+2. Pick the board you are scoring.
+3. Tap the contract number.
+4. Tap the suit.
+5. Tap **Doubled** or **Redoubled** only if needed.
+6. Tap who played the hand.
+7. Tap how many tricks were made.
+8. Check the score shown on the screen.
+9. Click **Save & Next Board**.
 
 ## Close The App
 

@@ -157,12 +157,14 @@ function startBackend() {
 
   const bridgeEnv = readEnvFile(path.join(app.getPath('userData'), 'bridge.env'));
   const port = process.env.PORT || bridgeEnv.PORT || '4000';
+  const bridgeEnvFile = path.join(app.getPath('userData'), 'bridge.env');
   const userDb = ensureWritableDatabase(backendDir);
   const env = {
     ...process.env,
     ...bridgeEnv,
     ELECTRON_RUN_AS_NODE: '1',
     PORT: port,
+    BRIDGE_ENV_FILE: bridgeEnvFile,
     DATABASE_URL: bridgeEnv.DATABASE_URL || toPrismaFileUrl(userDb),
   };
 

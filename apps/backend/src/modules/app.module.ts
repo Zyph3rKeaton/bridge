@@ -6,6 +6,7 @@ import { BoardsModule } from './boards/boards.module';
 import { ResultsModule } from './results/results.module';
 import { RankingsModule } from './rankings/rankings.module';
 import { ExportsModule } from './exports/exports.module';
+import { SettingsModule } from './settings/settings.module';
 
 @Module({
   imports: [
@@ -15,8 +16,9 @@ import { ExportsModule } from './exports/exports.module';
     ResultsModule,
     RankingsModule,
     ExportsModule,
+    SettingsModule,
   ],
   controllers: [HealthController],
   providers: [],
 })
-export class AppModule {} 
+export class AppModule {}

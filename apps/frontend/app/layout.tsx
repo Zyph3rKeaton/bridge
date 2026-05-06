@@ -48,6 +48,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Link className="rounded-lg px-5 py-3 text-xl font-semibold focus:outline-none focus:ring-2" href="/board-entry" style={{ backgroundColor: 'var(--surface)', color: 'var(--text)' }}>Board Entry</Link>
             <Link className="rounded-lg px-5 py-3 text-xl font-semibold focus:outline-none focus:ring-2" href="/results" style={{ backgroundColor: 'var(--surface)', color: 'var(--text)' }}>Results</Link>
             <Link className="rounded-lg px-5 py-3 text-xl font-semibold focus:outline-none focus:ring-2" href="/scan" style={{ backgroundColor: 'var(--surface)', color: 'var(--text)' }}>Scan</Link>
+            <Link className="rounded-lg px-5 py-3 text-xl font-semibold focus:outline-none focus:ring-2" href={'/settings' as any} style={{ backgroundColor: 'var(--surface)', color: 'var(--text)' }}>Settings</Link>
           </nav>
         </header>
         <div role="main" id="main" className="min-h-screen" style={{ backgroundColor: 'var(--bg)', color: 'var(--text)' }}>

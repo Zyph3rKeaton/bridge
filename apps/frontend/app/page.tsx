@@ -18,6 +18,7 @@ export default function Home() {
         <Link className="inline-flex items-center justify-center rounded-lg bg-[hsl(145_65%_32%)] px-6 py-4 text-white text-xl" href="/board-entry">Board Entry</Link>
         <Link className="inline-flex items-center justify-center rounded-lg bg-[hsl(350_70%_40%)] px-6 py-4 text-white text-xl" href="/results">Results</Link>
         <Link className="inline-flex items-center justify-center rounded-lg bg-[hsl(200_80%_35%)] px-6 py-4 text-white text-xl" href="/scan">Scan</Link>
+        <Link className="inline-flex items-center justify-center rounded-lg bg-[hsl(215_28%_35%)] px-6 py-4 text-white text-xl" href={'/settings' as any}>Settings</Link>
       </div>
     </div>
   );
