@@ -69,10 +69,12 @@ function drawCover(doc, title, subtitle, options = {}) {
     .font('Helvetica-Bold')
     .fontSize(30)
     .text(title, 132, 38, { width: 410 });
-  doc
-    .font('Helvetica')
-    .fontSize(15)
-    .text(subtitle, 132, 80, { width: 410, lineGap: 3 });
+  if (subtitle) {
+    doc
+      .font('Helvetica')
+      .fontSize(15)
+      .text(subtitle, 132, 80, { width: 410, lineGap: 3 });
+  }
   doc.y = 164;
 }
 
@@ -225,9 +227,8 @@ function renderPrivateGuide() {
   }
 
   const doc = createDoc(privatePdfPath);
-  drawCover(doc, 'Bridge Scoring Photo AI Setup', 'Private one-time setup. Do not post this page online.', { private: true });
+  drawCover(doc, 'Bridge Scoring Photo AI Setup', '', { private: true });
 
-  callout(doc, 'Keep this page private.', { warning: true });
   sectionHeader(doc, 'Turn On Photo AI');
   stepList(doc, [
     'Open **Bridge Scoring**.',
