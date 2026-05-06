@@ -3,8 +3,13 @@ name: Desktop Builds
 on:
   workflow_dispatch:
     inputs:
+      sign_and_notarize:
+        description: "Require Apple signing/notarization secrets"
+        required: true
+        type: boolean
+        default: false
       create_draft_release:
-        description: "Attach the signed DMG to a draft GitHub Release"
+        description: "Attach the DMG to a draft GitHub Release"
         required: true
         type: boolean
         default: true
@@ -41,7 +46,7 @@ jobs:
           if-no-files-found: error
 
   mac-dmg:
-    name: macOS signed DMG app
+    name: macOS DMG app
     runs-on: macos-latest
     env:
       DATABASE_URL: file:./../dev.db
@@ -57,17 +62,33 @@ jobs:
       APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
     steps:
       - uses: actions/checkout@v6
-      - name: Check signing secrets
+      - name: Select DMG signing mode
+        id: signing
         shell: bash
         run: |
-          missing=0
+          set -euo pipefail
+          has_secrets=1
           for name in CSC_LINK CSC_KEY_PASSWORD APPLE_ID APPLE_APP_SPECIFIC_PASSWORD APPLE_TEAM_ID; do
             if [ -z "$(printenv "$name")" ]; then
-              echo "::error::Missing GitHub secret: $name"
-              missing=1
+              has_secrets=0
             fi
           done
-          exit "$missing"
+
+          if [ "${{ inputs.sign_and_notarize }}" = "true" ]; then
+            if [ "$has_secrets" -ne 1 ]; then
+              echo "::error::Signed builds require CSC_LINK, CSC_KEY_PASSWORD, APPLE_ID, APPLE_APP_SPECIFIC_PASSWORD, and APPLE_TEAM_ID secrets."
+              exit 1
+            fi
+            echo "mode=signed" >> "$GITHUB_OUTPUT"
+            echo "label=signed and notarized" >> "$GITHUB_OUTPUT"
+          elif [ "$has_secrets" -eq 1 ]; then
+            echo "mode=signed" >> "$GITHUB_OUTPUT"
+            echo "label=signed and notarized" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::Apple signing secrets are missing. Building an unsigned DMG for testing."
+            echo "mode=unsigned" >> "$GITHUB_OUTPUT"
+            echo "label=unsigned test" >> "$GITHUB_OUTPUT"
+          fi
       - uses: actions/setup-node@v6
         with:
           node-version: 20
@@ -75,8 +96,14 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm test
-      - run: npm -w apps/electron run build:dmg
+      - name: Build signed DMG
+        if: ${{ steps.signing.outputs.mode == 'signed' }}
+        run: npm -w apps/electron run build:dmg
+      - name: Build unsigned DMG
+        if: ${{ steps.signing.outputs.mode == 'unsigned' }}
+        run: npm -w apps/electron run build:dmg:unsigned
       - name: Verify signed and notarized DMG
+        if: ${{ steps.signing.outputs.mode == 'signed' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -97,9 +124,22 @@ jobs:
           xcrun stapler validate "$DMG_PATH"
           spctl --assess --type execute --verbose=4 "$APP_PATH"
           spctl --assess --type open --verbose=4 "$DMG_PATH"
+      - name: Verify unsigned DMG
+        if: ${{ steps.signing.outputs.mode == 'unsigned' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          DMG_PATH="$(find apps/electron/dist -maxdepth 1 -type f -name '*.dmg' -print -quit)"
+
+          if [ -z "$DMG_PATH" ]; then
+            echo "::error::No .dmg file found in apps/electron/dist"
+            exit 1
+          fi
+
+          hdiutil verify "$DMG_PATH"
       - uses: actions/upload-artifact@v7
         with:
-          name: bridge-scoring-macos-dmg
+          name: bridge-scoring-macos-${{ steps.signing.outputs.mode }}-dmg
           path: apps/electron/dist/*.dmg
           if-no-files-found: error
       - name: Create draft release with DMG
@@ -111,8 +151,10 @@ jobs:
           set -euo pipefail
           DMG_PATH="$(find apps/electron/dist -maxdepth 1 -type f -name '*.dmg' -print -quit)"
           VERSION="$(node -p "require('./apps/electron/package.json').version")"
-          TAG="desktop-v${VERSION}-${GITHUB_RUN_NUMBER}"
+          MODE="${{ steps.signing.outputs.mode }}"
+          LABEL="${{ steps.signing.outputs.label }}"
+          TAG="desktop-v${VERSION}-${GITHUB_RUN_NUMBER}-${MODE}"
           gh release create "$TAG" "$DMG_PATH" \
             --draft \
-            --title "Bridge Scoring ${VERSION} signed DMG" \
-            --notes "Signed and notarized Bridge Scoring DMG from workflow run ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}."
+            --title "Bridge Scoring ${VERSION} ${LABEL} DMG" \
+            --notes "Bridge Scoring ${LABEL} DMG from workflow run ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}."

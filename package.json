@@ -16,6 +16,7 @@
     "desktop:prep": "npm -w apps/electron run prep",
     "desktop:win": "npm -w apps/electron run build:win",
     "desktop:dmg": "npm -w apps/electron run build:dmg",
+    "desktop:dmg:unsigned": "npm -w apps/electron run build:dmg:unsigned",
     "docs:grandma-pdf": "node scripts/generate-grandma-pdfs.js"
   },
   "devDependencies": {
