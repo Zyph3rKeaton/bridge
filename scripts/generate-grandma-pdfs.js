@@ -172,11 +172,19 @@ function renderPublicGuide() {
   const guide = parseGuide(fs.readFileSync(publicGuidePath, 'utf8'));
   drawCover(doc, guide.title, 'Simple large-print instructions for using Bridge Scoring.');
 
+  renderGuide(doc, guide);
+
+  finishDoc(doc);
+}
+
+function renderGuide(doc, guide, options = {}) {
   for (const line of guide.intro) {
     paragraph(doc, line, { size: 16 });
   }
 
+  const skipTitles = new Set(options.skipTitles || []);
   for (const section of guide.sections) {
+    if (skipTitles.has(section.title)) continue;
     sectionHeader(doc, section.title);
     for (const line of section.paragraphs) {
       if (/main way/i.test(line) || /one time/i.test(line)) callout(doc, line);
@@ -185,8 +193,6 @@ function renderPublicGuide() {
     }
     if (section.steps.length) stepList(doc, section.steps);
   }
-
-  finishDoc(doc);
 }
 
 function extractKeyFromPrivatePdf() {
@@ -227,7 +233,7 @@ function renderPrivateGuide() {
   }
 
   const doc = createDoc(privatePdfPath);
-  drawCover(doc, 'Bridge Scoring Photo AI Setup', '', { private: true });
+  drawCover(doc, 'Bridge Scoring Complete Guide', '', { private: true });
 
   sectionHeader(doc, 'Turn On Photo AI');
   stepList(doc, [
@@ -258,6 +264,11 @@ function renderPrivateGuide() {
     'Click **AI Parse & Import**.',
     'Click **Results** and check the scores.',
   ]);
+
+  doc.addPage();
+  sectionHeader(doc, 'How To Use The App');
+  const guide = parseGuide(fs.readFileSync(publicGuidePath, 'utf8'));
+  renderGuide(doc, guide, { skipTitles: ['Turn On Photo AI'] });
 
   finishDoc(doc);
   return true;
