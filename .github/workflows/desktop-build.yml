@@ -24,7 +24,7 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm -w apps/electron run build:win
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: bridge-scoring-windows-unpacked
           path: apps/electron/dist/win-unpacked/**
@@ -50,7 +50,7 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm -w apps/electron run build:dmg
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: bridge-scoring-macos-dmg
           path: apps/electron/dist/*.dmg
