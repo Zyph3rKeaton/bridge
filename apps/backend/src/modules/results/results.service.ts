@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../../common/prisma.service';
 import { calculateDuplicateScore } from '../../scoring/duplicate';
 
@@ -233,15 +233,23 @@ export class ResultsService {
     const existing = await this.prisma.result.findUnique({ where: { id } });
     if (!existing) throw new Error('Result not found');
     const board = await this.prisma.board.findUniqueOrThrow({ where: { id: existing.board_id } });
+    const contractLevel = patch.contract_level ?? existing.contract_level;
+    const strain = patch.strain ?? existing.strain;
+    const declarer = patch.declarer ?? existing.declarer;
+    const tricksMade = patch.tricks_made ?? existing.tricks_made;
+    if (contractLevel === null || strain === null || declarer === null || tricksMade === null) {
+      throw new BadRequestException('Result must include contract, declarer, and tricks before scoring');
+    }
+
     const merged = {
       pair_ns: patch.pair_ns ?? existing.pair_ns,
       pair_ew: patch.pair_ew ?? existing.pair_ew,
-      contract_level: patch.contract_level ?? existing.contract_level,
-      strain: (patch.strain as any) ?? existing.strain,
+      contract_level: contractLevel,
+      strain: strain as 'C' | 'D' | 'H' | 'S' | 'NT',
       doubled: patch.doubled ?? existing.doubled,
       redoubled: patch.redoubled ?? existing.redoubled,
-      declarer: (patch.declarer as any) ?? existing.declarer,
-      tricks_made: patch.tricks_made ?? existing.tricks_made,
+      declarer: declarer as 'N' | 'E' | 'S' | 'W',
+      tricks_made: tricksMade,
     } as const;
     const score = calculateDuplicateScore({
       level: merged.contract_level,
@@ -426,4 +434,4 @@ export class ResultsService {
       return null;
     }
   }
-} 
+}

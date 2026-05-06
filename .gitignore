@@ -1,7 +1,9 @@
 # Dependencies
 node_modules/
+.venv/
 .pnp/
 .pnp.cjs
+/apps/electron/resources/
 
 # Build
 build/
@@ -9,6 +11,7 @@ dist/
 .next/
 out/
 coverage/
+*.tsbuildinfo
 
 # Env
 .env
@@ -31,10 +34,11 @@ yarn-error.log*
 # Prisma
 /apps/backend/prisma/*.db
 /apps/backend/prisma/migrations/
+/apps/backend/desktop-seed.db
 
 # Playwright
 /playwright-report/
 /test-results/
 
 # Misc
-*.swp 
+*.swp

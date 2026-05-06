@@ -44,8 +44,8 @@ function ScanClient() {
     const url = URL.createObjectURL(file);
     setImage(url);
     setCropped(null);
-    await smartCrop(file);
-    await aiParseWithBlob(file);
+    setRows([]);
+    setMessage('Photo ready');
   };
 
   const captureFrame = async () => {
@@ -64,8 +64,9 @@ function ScanClient() {
     const res = await fetch(dataUrl);
     const blob = await res.blob();
     const file = new File([blob], 'capture.png', { type: 'image/png' });
-    await smartCrop(file);
-    await aiParseWithBlob(file);
+    setLastFile(file);
+    setRows([]);
+    setMessage('Photo ready');
   };
 
   const currentBlob = async (): Promise<Blob | null> => {
@@ -260,6 +261,7 @@ function ScanClient() {
         <button onClick={() => setUseCamera(v => !v)} className="rounded-lg px-4 py-2" style={{ backgroundColor: 'var(--primary)', color: 'var(--primary-contrast)' }}>
           {useCamera ? 'Close Camera' : 'Use Camera'}
         </button>
+        <button onClick={async () => { const blob = await currentBlob(); if (blob) await smartCrop(new File([blob], 'scan.png', { type: blob.type || 'image/png' })); else setMessage('No image to crop'); }} className="rounded-lg px-4 py-2" style={{ backgroundColor: 'var(--primary)', color: 'var(--primary-contrast)' }}>Find Edges</button>
         <button onClick={aiParse} className="rounded-lg px-4 py-2" style={{ backgroundColor: 'var(--accent)', color: 'var(--primary-contrast)' }}>AI Parse</button>
         <button onClick={aiImport} className="rounded-lg px-4 py-2" style={{ backgroundColor: 'var(--accent)', color: 'var(--primary-contrast)' }}>AI Parse & Import</button>
       </div>
@@ -344,4 +346,4 @@ export default function Page() {
       <ScanClient />
     </Suspense>
   );
-} 
+}

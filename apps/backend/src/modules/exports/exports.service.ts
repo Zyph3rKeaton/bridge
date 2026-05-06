@@ -31,7 +31,7 @@ export class ExportsService {
   async exportFinalPdf(eventId: string): Promise<Buffer> {
     const doc = new PDFDocument({ size: 'LETTER', margin: 36 });
     const buffers: Buffer[] = [];
-    doc.on('data', (b) => buffers.push(b));
+    doc.on('data', (b: Buffer) => buffers.push(b));
     const event = await this.prisma.event.findUniqueOrThrow({ where: { id: eventId } });
     doc.fontSize(22).text(`Final Rankings — ${event.name}`);
     doc.moveDown();
@@ -39,4 +39,4 @@ export class ExportsService {
     doc.end();
     return await new Promise((resolve) => doc.on('end', () => resolve(Buffer.concat(buffers))));
   }
-} 
+}

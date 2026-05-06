@@ -12,12 +12,15 @@
     "lint": "echo 'Add linting in apps'",
     "typecheck": "npm -w apps/backend run typecheck && npm -w apps/frontend run typecheck",
     "test": "npm -w apps/backend test && npm -w apps/frontend test",
-    "build": "npm -w apps/backend run build && npm -w apps/frontend run build"
+    "build": "npm -w apps/backend run build && npm -w apps/frontend run build",
+    "desktop:prep": "npm -w apps/electron run prep",
+    "desktop:win": "npm -w apps/electron run build:win",
+    "desktop:dmg": "npm -w apps/electron run build:dmg"
   },
   "devDependencies": {
-    "7zip-bin": "5.1.1"
+    "7zip-bin": "5.2.0"
   },
   "overrides": {
-    "7zip-bin": "5.1.1"
+    "7zip-bin": "5.2.0"
   }
 }

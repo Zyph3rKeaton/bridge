@@ -8,42 +8,54 @@
   "repository": "https://github.com/Zyph3rKeaton/bridge",
   "scripts": {
     "start": "electron .",
-    "prep": "npm -w ../../apps/frontend run build",
-    "build": "npm run prep && npx electron-builder --mac dmg --publish never",
-    "release": "npm run prep && npx electron-builder --mac dmg,zip --publish always"
+    "prep": "node ../../scripts/prepare-electron-resources.js",
+    "pack:win": "npm run prep && electron-builder --win dir --publish never",
+    "build": "npm run build:win",
+    "build:win": "npm run pack:win",
+    "build:win:portable": "npm run prep && electron-builder --win portable --publish never",
+    "build:dmg": "npm run prep && electron-builder --mac dmg --publish never",
+    "release": "npm run prep && electron-builder --mac dmg,zip --publish always"
   },
-  "dependencies": {
-    "electron-updater": "6.3.9"
-  },
+  "dependencies": {},
   "devDependencies": {
     "electron": "28.2.0",
     "electron-builder": "24.13.3",
-    "7zip-bin": "5.1.1",
+    "7zip-bin": "5.2.0",
     "ts-node": "10.9.2",
     "typescript": "5.9.2"
   },
   "build": {
+    "productName": "Bridge Scoring",
     "appId": "com.bridge.scoring",
+    "directories": {
+      "output": "dist"
+    },
+    "npmRebuild": false,
     "mac": {
       "target": ["dmg", "zip"],
+      "category": "public.app-category.productivity",
       "extendInfo": {
         "NSCameraUsageDescription": "Used to capture scoresheets for OCR parsing.",
         "NSCameraUseContinuityCameraDeviceType": true
       }
+    },
+    "win": {
+      "target": ["portable"],
+      "signAndEditExecutable": false
     },
     "publish": [
       { "provider": "github", "owner": "Zyph3rKeaton", "repo": "bridge", "channel": "latest", "releaseType": "draft" }
     ],
     "extraResources": [
       {
-        "from": "../frontend/out",
+        "from": "resources/frontend",
         "to": "frontend",
         "filter": ["**/*"]
       },
       {
-        "from": "../backend",
+        "from": "resources/backend",
         "to": "backend",
-        "filter": ["**/*"]
+        "filter": ["**/*", "!**/.env", "!**/.env.*"]
       }
     ]
   }

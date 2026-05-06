@@ -1,0 +1,57 @@
+name: Desktop Builds
+
+on:
+  workflow_dispatch:
+
+jobs:
+  windows-portable:
+    name: Windows portable test app
+    runs-on: windows-latest
+    env:
+      DATABASE_URL: file:./../dev.db
+      REDIS_URL: redis://localhost:6379
+      JWT_SECRET: ci
+      DEVICE_PIN: 1234
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:4000
+      CSC_IDENTITY_AUTO_DISCOVERY: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm -w apps/electron run build:win
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bridge-scoring-windows-unpacked
+          path: apps/electron/dist/win-unpacked/**
+          if-no-files-found: error
+
+  mac-dmg:
+    name: macOS DMG test app
+    runs-on: macos-latest
+    env:
+      DATABASE_URL: file:./../dev.db
+      REDIS_URL: redis://localhost:6379
+      JWT_SECRET: ci
+      DEVICE_PIN: 1234
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:4000
+      CSC_IDENTITY_AUTO_DISCOVERY: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm -w apps/electron run build:dmg
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bridge-scoring-macos-dmg
+          path: apps/electron/dist/*.dmg
+          if-no-files-found: error
