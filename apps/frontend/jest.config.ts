@@ -2,14 +2,17 @@ const config = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   testEnvironment: 'jsdom',
   transform: {
-    '^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.json', useESM: false }],
+    '^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.jest.json', useESM: false }],
   },
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
-  testMatch: ['<rootDir>/__tests__/ocrParser.test.ts'],
+  testMatch: [
+    '<rootDir>/__tests__/ocrParser.test.ts',
+    '<rootDir>/__tests__/newSession.test.tsx',
+  ],
   testPathIgnorePatterns: ['<rootDir>/tests/'],
 };
 
-export default config; 
+export default config;
