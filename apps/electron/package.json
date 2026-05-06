@@ -36,6 +36,12 @@
     "mac": {
       "target": ["dmg", "zip"],
       "category": "public.app-category.productivity",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "forceCodeSigning": true,
+      "entitlements": "assets/entitlements.mac.plist",
+      "entitlementsInherit": "assets/entitlements.mac.inherit.plist",
+      "notarize": true,
       "extendInfo": {
         "NSCameraUsageDescription": "Used to capture scoresheets for OCR parsing.",
         "NSCameraUseContinuityCameraDeviceType": true

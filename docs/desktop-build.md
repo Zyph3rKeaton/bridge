@@ -15,12 +15,13 @@ Run `apps/electron/dist/win-unpacked/Bridge Scoring.exe`.
 
 Windows cannot build or run a DMG. To make one for testing:
 
-1. Push this branch to GitHub.
-2. Open GitHub Actions.
-3. Run the `Desktop Builds` workflow.
-4. Download the `bridge-scoring-macos-dmg` artifact.
+1. Add the Apple signing secrets listed in `docs/macos-signing.md`.
+2. Push this branch to GitHub.
+3. Open GitHub Actions.
+4. Run the `Desktop Builds` workflow.
+5. Download the `bridge-scoring-macos-dmg` artifact, or use the draft GitHub Release created by the workflow.
 
-This DMG is for testing. It is unsigned and not notarized.
+The workflow now requires signing secrets. If they are missing, the macOS job fails instead of creating an unsigned DMG.
 
 ## AI OCR key
 

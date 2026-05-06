@@ -2,6 +2,15 @@ name: Desktop Builds
 
 on:
   workflow_dispatch:
+    inputs:
+      create_draft_release:
+        description: "Attach the signed DMG to a draft GitHub Release"
+        required: true
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
 
 jobs:
   windows-portable:
@@ -32,7 +41,7 @@ jobs:
           if-no-files-found: error
 
   mac-dmg:
-    name: macOS DMG test app
+    name: macOS signed DMG app
     runs-on: macos-latest
     env:
       DATABASE_URL: file:./../dev.db
@@ -41,8 +50,24 @@ jobs:
       DEVICE_PIN: 1234
       NEXT_PUBLIC_API_BASE_URL: http://localhost:4000
       CSC_IDENTITY_AUTO_DISCOVERY: "false"
+      CSC_LINK: ${{ secrets.CSC_LINK }}
+      CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+      APPLE_ID: ${{ secrets.APPLE_ID }}
+      APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
     steps:
       - uses: actions/checkout@v6
+      - name: Check signing secrets
+        shell: bash
+        run: |
+          missing=0
+          for name in CSC_LINK CSC_KEY_PASSWORD APPLE_ID APPLE_APP_SPECIFIC_PASSWORD APPLE_TEAM_ID; do
+            if [ -z "$(printenv "$name")" ]; then
+              echo "::error::Missing GitHub secret: $name"
+              missing=1
+            fi
+          done
+          exit "$missing"
       - uses: actions/setup-node@v6
         with:
           node-version: 20
@@ -51,8 +76,43 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm -w apps/electron run build:dmg
+      - name: Verify signed and notarized DMG
+        shell: bash
+        run: |
+          set -euo pipefail
+          APP_PATH="$(find apps/electron/dist -type d -name '*.app' -print -quit)"
+          DMG_PATH="$(find apps/electron/dist -maxdepth 1 -type f -name '*.dmg' -print -quit)"
+
+          if [ -z "$APP_PATH" ]; then
+            echo "::error::No .app bundle found in apps/electron/dist"
+            exit 1
+          fi
+          if [ -z "$DMG_PATH" ]; then
+            echo "::error::No .dmg file found in apps/electron/dist"
+            exit 1
+          fi
+
+          codesign --verify --deep --strict --verbose=2 "$APP_PATH"
+          xcrun stapler validate "$APP_PATH"
+          xcrun stapler validate "$DMG_PATH"
+          spctl --assess --type execute --verbose=4 "$APP_PATH"
+          spctl --assess --type open --verbose=4 "$DMG_PATH"
       - uses: actions/upload-artifact@v7
         with:
           name: bridge-scoring-macos-dmg
           path: apps/electron/dist/*.dmg
           if-no-files-found: error
+      - name: Create draft release with DMG
+        if: ${{ inputs.create_draft_release }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          DMG_PATH="$(find apps/electron/dist -maxdepth 1 -type f -name '*.dmg' -print -quit)"
+          VERSION="$(node -p "require('./apps/electron/package.json').version")"
+          TAG="desktop-v${VERSION}-${GITHUB_RUN_NUMBER}"
+          gh release create "$TAG" "$DMG_PATH" \
+            --draft \
+            --title "Bridge Scoring ${VERSION} signed DMG" \
+            --notes "Signed and notarized Bridge Scoring DMG from workflow run ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}."
