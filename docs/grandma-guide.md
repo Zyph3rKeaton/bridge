@@ -1,21 +1,21 @@
 # Bridge Scoring Simple Guide
 
-This app helps you keep score for a bridge game.
+I made this app to help you keep score for a bridge game.
 
 ## Put It On Your Mac
 
-1. Open the file Keaton sends you.
+1. Open the file I sent you.
 2. If a window opens with **Bridge Scoring** and **Applications**, drag **Bridge Scoring** onto **Applications**.
 3. Open **Applications**.
 4. Double-click **Bridge Scoring**.
-5. If your Mac says it cannot open the app, call Keaton.
+5. If your Mac says it cannot open the app, call me.
 
 ## Open The App
 
 1. Double-click **Bridge Scoring**.
 2. Wait for the home screen to appear.
 3. If something looks wrong, close the app and open it again.
-4. If it still does not work, call Keaton.
+4. If it still does not work, call me.
 
 ## Start A New Game
 
@@ -48,13 +48,13 @@ This app helps you keep score for a bridge game.
 2. Find the row with the mistake.
 3. To remove the row, click the red **X**.
 4. To change a number, double-click the number and type the right one.
-5. If you are not sure what to change, call Keaton before deleting anything.
+5. If you are not sure what to change, call me before deleting anything.
 
 ## Use A Photo
 
 Typing scores by hand is the safest way.
 
-If Keaton has set up photo reading for you:
+If I have set up photo reading for you:
 
 1. Click **Scan**.
 2. Choose a clear photo of the score sheet.
