@@ -13,9 +13,9 @@
     "build": "npm run build:win",
     "build:win": "npm run pack:win",
     "build:win:portable": "npm run prep && electron-builder --win portable --publish never",
-    "build:dmg": "npm run prep && electron-builder --mac dmg --publish never",
-    "build:dmg:unsigned": "npm run prep && electron-builder --mac dmg --publish never -c.mac.forceCodeSigning=false -c.mac.notarize=false",
-    "release": "npm run prep && electron-builder --mac dmg,zip --publish always"
+    "build:dmg": "npm run prep && electron-builder --mac dmg --x64 --publish never",
+    "build:dmg:unsigned": "npm run prep && electron-builder --mac dmg --x64 --publish never -c.mac.forceCodeSigning=false -c.mac.notarize=false",
+    "release": "npm run prep && electron-builder --mac dmg,zip --x64 --publish always"
   },
   "dependencies": {},
   "devDependencies": {
